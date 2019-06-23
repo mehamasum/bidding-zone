@@ -2,6 +2,7 @@
   "name": "bidding-zone",
   "version": "0.1.0",
   "private": true,
+  "proxy": "http://localhost:8000",
   "dependencies": {
     "@material-ui/core": "^4.1.1",
     "axios": "^0.19.0",
