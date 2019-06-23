@@ -33,6 +33,7 @@ class Auctionable(models.Model):
     added = models.DateTimeField(auto_now_add=True)
     category = models.ForeignKey(Category, models.CASCADE)
     base_price = models.DecimalField(default=0.00, max_digits=6, decimal_places=2)
+    ending = models.DateTimeField()
 
     class Meta:
         verbose_name = "Auctionable item"
@@ -49,4 +50,16 @@ class Bid(models.Model):
         return f'{self.user} placed a bid of {self.amount} on {self.item}'
 
 class Transaction(models.Model):
+    PENDING = 'PENDING'
+    COMPLETE = 'COMPLETE'
+    TRANSCATION_STATUS_CHOICES = [
+        (PENDING, 'Pending'),
+        (COMPLETE, 'Complete'),
+    ]
+
     bid = models.ForeignKey(Bid, models.CASCADE)
+    status = models.CharField(
+        max_length=128,
+        choices=TRANSCATION_STATUS_CHOICES,
+        default=PENDING,
+    )
