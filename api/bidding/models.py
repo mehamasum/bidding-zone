@@ -11,6 +11,7 @@ class Category(models.Model):
     def __str__(self):
         return self.name
 
+
 class Auctionable(models.Model):
     ON_AUCTION = 'ON_AUCTION'
     SOLD = 'SOLD'
@@ -20,7 +21,7 @@ class Auctionable(models.Model):
         (SOLD, 'Sold'),
         (HIDDEN, 'Hidden'),
     ]
-    
+
     name = models.CharField(max_length=255)
     description = models.CharField(max_length=2048, blank=True, null=True)
     units = models.IntegerField()
@@ -32,7 +33,8 @@ class Auctionable(models.Model):
     user = models.ForeignKey(User, models.CASCADE)
     added = models.DateTimeField(auto_now_add=True)
     category = models.ForeignKey(Category, models.CASCADE)
-    base_price = models.DecimalField(default=0.00, max_digits=6, decimal_places=2)
+    base_price = models.DecimalField(
+        default=0.00, max_digits=6, decimal_places=2)
     ending = models.DateTimeField()
 
     class Meta:
@@ -41,13 +43,15 @@ class Auctionable(models.Model):
     def __str__(self):
         return self.name
 
+
 class Bid(models.Model):
     user = models.ForeignKey(User, models.CASCADE)
     item = models.ForeignKey(Auctionable, models.CASCADE)
     amount = models.DecimalField(max_digits=6, decimal_places=2)
-    
+
     def __str__(self):
         return f'{self.user} placed a bid of {self.amount} on {self.item}'
+
 
 class Transaction(models.Model):
     PENDING = 'PENDING'
