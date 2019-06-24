@@ -24,12 +24,10 @@ function Login(props) {
 
   const onSubmit = e => {
     e.preventDefault();
-    const config = {
-      headers: { 'content-type': 'application/json' }
-    };
-
     axios
-      .post('/api/login/', JSON.stringify(values), config)
+      .post('/api/login/', JSON.stringify(values), {
+        headers: { 'content-type': 'application/json' }
+      })
       .then(response => {
         onLoginSuccess(response.data.token);
       })
