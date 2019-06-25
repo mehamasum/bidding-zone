@@ -44,6 +44,11 @@ class Auctionable(models.Model):
         return self.name
 
 
+class AuctionableImage(models.Model):
+    item = models.ForeignKey(Auctionable, models.CASCADE, related_name='images')
+    image = models.ImageField(upload_to='auctionable_images/')
+
+
 class Bid(models.Model):
     user = models.ForeignKey(User, models.CASCADE)
     item = models.ForeignKey(Auctionable, models.CASCADE)
