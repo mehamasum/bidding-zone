@@ -14,7 +14,7 @@ import { withRouter } from 'react-router';
 import Link from '@material-ui/core/Link';
 
 const PrimarySearchAppBar = props => {
-  const { isAuthenticated, onLogout } = useContext(AuthContext);
+  const { token, onLogout } = useContext(AuthContext);
   const [anchorEl, setAnchorEl] = React.useState(null);
 
   function handleProfileMenuOpen(event) {
@@ -45,23 +45,23 @@ const PrimarySearchAppBar = props => {
   const renderMenu = () => {
     const menuProps = {
       anchorEl,
-      anchorOrigin:{ vertical: 'top', horizontal: 'right' },
-      transformOrigin:{ vertical: 'top', horizontal: 'right' },
+      anchorOrigin: { vertical: 'top', horizontal: 'right' },
+      transformOrigin: { vertical: 'top', horizontal: 'right' },
       open: Boolean(anchorEl),
       onClose: handleMenuClose
     }
     return (
       <>
-        {isAuthenticated ? (
+        {token ? (
           <Menu {...menuProps}>
             <MenuItem onClick={onProfileClick}>Profile</MenuItem>
             <MenuItem onClick={onLogoutClick}>Logout</MenuItem>
           </Menu>
         ) : (
-          <Menu {...menuProps}>
-            <MenuItem onClick={onLoginClick}>Login</MenuItem>
-          </Menu>
-        )}
+            <Menu {...menuProps}>
+              <MenuItem onClick={onLoginClick}>Login</MenuItem>
+            </Menu>
+          )}
       </>
     );
   };
@@ -81,7 +81,7 @@ const PrimarySearchAppBar = props => {
               Bidding Zone
             </Link>
           </Typography>
-          {props.children ? props.children: null}
+          {props.children ? props.children : null}
           <div className={classes.grow} />
           <div>
             <IconButton

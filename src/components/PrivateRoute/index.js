@@ -4,21 +4,21 @@ import { AuthContext } from '../AuthProvider';
 
 function PrivateRoute(props) {
   const { component: Component, ...rest } = props;
-  const { isAuthenticated } = useContext(AuthContext);
+  const { token } = useContext(AuthContext);
   return (
     <Route
       {...rest}
       render={props =>
-        isAuthenticated ? (
+        token ? (
           <Component {...props} />
         ) : (
-          <Redirect
-            to={{
-              pathname: '/login',
-              state: { from: props.location }
-            }}
-          />
-        )
+            <Redirect
+              to={{
+                pathname: '/login',
+                state: { from: props.location }
+              }}
+            />
+          )
       }
     />
   );

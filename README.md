@@ -4,6 +4,10 @@ Python 3.6+ and NodeJS 8+ is required.
 
 ## Development
 
+Create an empty database named `biddingdb` in PostgreSQL
+
+Then follow the following steps:
+
 ```sh
 # goto project root
 cd PROJECT_ROOT

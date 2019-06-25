@@ -13,7 +13,7 @@ function Login(props) {
     password: ''
   });
 
-  const { isAuthenticated, onLoginSuccess } = useContext(AuthContext);
+  const { token, onLoginSuccess } = useContext(AuthContext);
   const onInputChange = name => e => {
     const _value = e.target.value;
     setValues({
@@ -32,13 +32,13 @@ function Login(props) {
         onLoginSuccess(response.data.token);
       })
       .catch(error => {
-        if(error.response.data && error.response.data.non_field_errors)
+        if (error.response.data && error.response.data.non_field_errors)
           alert(error.response.data.non_field_errors[0]);
         console.log('Login failed', error, error.response);
       });
   };
 
-  if (isAuthenticated) {
+  if (token) {
     return <Redirect to="/" />;
   }
   return (
