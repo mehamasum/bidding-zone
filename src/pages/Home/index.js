@@ -1,76 +1,76 @@
 import React, { useContext, useState, useEffect, useRef } from 'react';
 import Navbar from '../../components/Navbar';
-import CategorySelect from '../../components/CategorySelect';
-import ItemList from '../../components/ItemList';
-import { AuthContext } from '../../components/AuthProvider';
-import axios from 'axios';
-import IconButton from '@material-ui/core/IconButton';
-import KeyboardArrowLeft from '@material-ui/icons/KeyboardArrowLeft';
-import KeyboardArrowRight from '@material-ui/icons/KeyboardArrowRight';
+import ItemSearch from '../../components/ItemSearch';
+import AuctionableContainer from '../../components/ItemList';
+import Typography from '@material-ui/core/Typography';
+import { makeStyles } from '@material-ui/core/styles';
 
-export default function Home() {
-    const { token } = useContext(AuthContext);
-    const [loadingInterestingItems, setLoadingInterestingItems] = useState(false);
-    const [interestingItems, setInterestingItems] = useState(null);
-    const [page, setPage] = useState(0);
-    const [prevPage, setPrevPage] = useState(-1);
+const useStyles = makeStyles(theme => ({
+    root: {
+        margin: theme.spacing(4),
+    }
+}));
 
-    useEffect(() => {
-        setLoadingInterestingItems(true);
-        axios
-            .get(`/api/auctionables/${interestingItems && page ?
-                new URL(page - prevPage > 0 ?
-                    interestingItems.next :
-                    interestingItems.previous
-                ).search : ''}`, {
-                    headers: {
-                        'Authorization': `Token ${token}`
-                    }
-                })
-            .then(response => {
-                setLoadingInterestingItems(false);
-                console.log(response.data);
-                setInterestingItems(response.data);
-            })
-            .catch(error => {
-                console.log('Fetch auctionables failed', error, error.response);
-            });
-    }, [page]);
+export default function Home(props) {
+    const classes = useStyles();
+    const [selectedCategory, setSelectedCategory] = React.useState("");
+    const [query, setQuery] = React.useState("");
+    const [categories, setCategories] = React.useState([
+        {
+            value: "",
+            label: "All categories"
+        }
+    ]);
 
-    const fetchMore = (forward) => e => {
-        console.log(forward);
-        setPrevPage(page);
-        setPage(forward ? page + 1 : page - 1);
+    function handleCategoryChange(e) {
+        setSelectedCategory(e.target.value);
+    }
+
+    function handleQueryChange(e) {
+        console.log('handleQueryChange', e.target.value)
+        setQuery(e.target.value);
+    }
+
+    function onSubmit(event) {
+        event.preventDefault();
+        //console.log(query, selectedCategory);
+    }
+
+    const onDetailsClick = item => {
+        props.history.push(`/items/${item.id}/`);
     }
 
     return (
         <div>
-            <Navbar><CategorySelect /></Navbar>
-            <div>
+            <Navbar>
+                <ItemSearch
+                    categories={categories}
+                    selectedCategory={selectedCategory}
+                    onSubmit={onSubmit}
+                    onChange={handleCategoryChange}
+                    onQueryChange={handleQueryChange} />
+            </Navbar>
+
+            <div className={classes.root}>
                 {
-                    loadingInterestingItems ?
-                        'Loading' :
-                        interestingItems ?
-                            <ItemList items={interestingItems.results} /> : null
+                    query ? <>
+                        <Typography variant="h5" gutterBottom>
+                            Search results for <em>{query}</em> in <em>{selectedCategory === '' ? 'All categories' : selectedCategory}</em>
+                        </Typography>
+                        <AuctionableContainer
+                            key={query + selectedCategory}
+                            url={`/api/auctionables/?name=${query}&category=${selectedCategory}`}
+                            onDetailsClick={onDetailsClick} />
+                        <br />
+                    </> : null
                 }
-                {interestingItems && (
-                    <>
-                        <IconButton
-                            disabled={!interestingItems.previous}
-                            color="primary"
-                            onClick={fetchMore(false)}
-                        >
-                            <KeyboardArrowLeft />
-                        </IconButton>
-                        <IconButton
-                            disabled={!interestingItems.next}
-                            color="primary"
-                            onClick={fetchMore(true)}
-                        >
-                            <KeyboardArrowRight />
-                        </IconButton>
-                    </>
-                )}
+
+                <Typography variant="h5" gutterBottom>
+                    Items you might like
+            </Typography>
+                <AuctionableContainer
+                    url={`/api/auctionables/`}
+                    onDetailsClick={onDetailsClick} />
             </div>
         </div>
     );

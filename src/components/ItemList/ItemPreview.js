@@ -39,7 +39,7 @@ function MediaCard(props) {
                 title={item.name}
             />
             <CardContent>
-                <Typography gutterBottom variant="h4" className={classes.title}>
+                <Typography gutterBottom variant="h6" className={classes.title}>
                     {`${item.name}`}
                 </Typography>
             </CardContent>

@@ -4,7 +4,7 @@ from .serializers import UserSerializer, GroupSerializer, AuctionableSerializer
 from .models import Auctionable
 from .permissions import IsAuctionableOwner
 from rest_framework.permissions import IsAuthenticated
-from rest_framework import filters
+from django_filters.rest_framework import DjangoFilterBackend
 
 
 class UserViewSet(viewsets.ModelViewSet):
@@ -29,8 +29,8 @@ class AuctionableViewSet(viewsets.ModelViewSet):
     """
     queryset = Auctionable.objects.all()
     serializer_class = AuctionableSerializer
-    filter_backends = (filters.SearchFilter,)
-    search_fields = ('name',)
+    filter_backends = (DjangoFilterBackend,)
+    filterset_fields = ('category', 'name',)
 
     def get_permissions(self):
 
