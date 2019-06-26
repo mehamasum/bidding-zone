@@ -6,6 +6,7 @@ import Select from '@material-ui/core/Select';
 import InputBase from '@material-ui/core/InputBase';
 import SearchIcon from '@material-ui/icons/Search';
 import { fade } from '@material-ui/core/styles/colorManipulator';
+import InputAdornment from '@material-ui/core/InputAdornment';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -42,6 +43,7 @@ const useStyles = makeStyles(theme => ({
   },
   inputRoot: {
     color: 'inherit',
+    height: '100%'
   },
   inputInput: {
     padding: theme.spacing(1, 1, 1, 7),
@@ -51,39 +53,55 @@ const useStyles = makeStyles(theme => ({
       width: 200,
     },
   },
+  select: {
+    borderRadius: 4,
+    backgroundColor: 'inherit',
+    color: 'inherit',
+    paddingLeft: theme.spacing(1),
+    paddingRight: theme.spacing(1),
+    [theme.breakpoints.down('md')]: {
+      width: 120,
+      paddingLeft: 0,
+      paddingRight: 0,
+    },
+  }
 }));
 
 export default function SimpleSelect(props) {
   const classes = useStyles();
   return (
     <form className={classes.root} autoComplete="off" onSubmit={props.onSubmit}>
-        <div className={classes.search}>
-            <div className={classes.searchIcon}>
-                <SearchIcon />
-            </div>
-            <InputBase
-                placeholder="Search movie by title..."
-                classes={{
-                    root: classes.inputRoot,
-                    input: classes.inputInput
-                }}
-                onChange={props.onQueryChange}
-            />
+      <div className={classes.search}>
+        <div className={classes.searchIcon}>
+          <SearchIcon />
         </div>
-      <FormControl className={classes.formControl}>
-        <Select
-          value={props.selectedCategory}
-          onChange={props.onChange}
-          displayEmpty
-          name="category"
-        >
-          {
-            props.categories.map(
-                item => <MenuItem key={item.value} value={item.value}>{item.label}</MenuItem>
-            )
-          }
-        </Select>
-      </FormControl>
+        <InputBase
+          placeholder="Search item by title..."
+          classes={{
+            root: classes.inputRoot,
+            input: classes.inputInput
+          }}
+          onChange={props.onQueryChange}
+          endAdornment={(<InputAdornment>
+            <FormControl className={classes.formControl}>
+              <Select
+                value={props.selectedCategory}
+                onChange={props.onChange}
+                displayEmpty
+                name="category"
+                className={classes.select}
+              >
+                {
+                  props.categories.map(
+                    item => <MenuItem key={item.value} value={item.value}>{item.label}</MenuItem>
+                  )
+                }
+              </Select>
+            </FormControl>
+          </InputAdornment>)}
+        />
+      </div>
+
     </form>
   );
 }
