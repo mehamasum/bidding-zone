@@ -1,6 +1,6 @@
 from django.contrib.auth.models import User, Group
 from rest_framework import serializers
-from .models import Auctionable, AuctionableImage
+from .models import Auctionable, AuctionableImage, Category
 
 
 class UserSerializer(serializers.HyperlinkedModelSerializer):
@@ -20,6 +20,12 @@ class AuctionableImageSerializer(serializers.ModelSerializer):
         model = AuctionableImage
         fields = '__all__'
         read_only_fields = ('id', 'item')
+
+
+class CategorySerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Category
+        fields = '__all__'
 
 
 class AuctionableSerializer(serializers.ModelSerializer):

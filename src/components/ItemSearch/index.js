@@ -9,8 +9,12 @@ import InputAdornment from '@material-ui/core/InputAdornment';
 import styles from './styles';
 const useStyles = makeStyles(styles);
 
-export default function SimpleSelect(props) {
+export default function SearchBox(props) {
   const classes = useStyles();
+
+  const onQueryChange = (e) => {
+    props.onQueryChange(e.target.value);
+  }
   return (
     <form className={classes.root} autoComplete="off" onSubmit={props.onSubmit}>
       <div className={classes.search}>
@@ -23,7 +27,7 @@ export default function SimpleSelect(props) {
             root: classes.inputRoot,
             input: classes.inputInput
           }}
-          onChange={props.onQueryChange}
+          onChange={onQueryChange}
           endAdornment={(<InputAdornment>
             <FormControl className={classes.formControl}>
               <Select
@@ -36,7 +40,7 @@ export default function SimpleSelect(props) {
               >
                 {
                   props.categories.map(
-                    item => <MenuItem key={item.value} value={item.value}>{item.label}</MenuItem>
+                    item => <MenuItem key={item.id} value={item.id}>{item.name}</MenuItem>
                   )
                 }
               </Select>

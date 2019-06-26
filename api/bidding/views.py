@@ -1,7 +1,8 @@
 from django.contrib.auth.models import User, Group
 from rest_framework import viewsets
-from .serializers import UserSerializer, GroupSerializer, AuctionableSerializer
-from .models import Auctionable
+from .serializers import (UserSerializer, GroupSerializer,
+                          AuctionableSerializer, CategorySerializer)
+from .models import Auctionable, Category
 from .permissions import IsAuctionableOwner
 from rest_framework.permissions import IsAuthenticated
 from django_filters.rest_framework import DjangoFilterBackend
@@ -13,6 +14,7 @@ class UserViewSet(viewsets.ModelViewSet):
     """
     queryset = User.objects.all().order_by('-date_joined')
     serializer_class = UserSerializer
+    permission_classes = [IsAuthenticated]
 
 
 class GroupViewSet(viewsets.ModelViewSet):
@@ -21,6 +23,16 @@ class GroupViewSet(viewsets.ModelViewSet):
     """
     queryset = Group.objects.all()
     serializer_class = GroupSerializer
+    permission_classes = [IsAuthenticated]
+
+
+class CategoryViewSet(viewsets.ModelViewSet):
+    """
+    API endpoint that allows categories to be viewed.
+    """
+    queryset = Category.objects.all()
+    serializer_class = CategorySerializer
+    permission_classes = [IsAuthenticated]
 
 
 class AuctionableViewSet(viewsets.ModelViewSet):
