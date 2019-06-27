@@ -7,6 +7,9 @@ import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
+import Timer from '@material-ui/icons/Timer';
+import StopWatch from '../Stopwatch';
+import { fade } from '@material-ui/core/styles/colorManipulator';
 
 const styles = theme => ({
     card: {
@@ -20,6 +23,18 @@ const styles = theme => ({
         whiteSpace: 'nowrap',
         overflow: 'hidden',
         textOverflow: 'ellipsis'
+    },
+    description: {
+        marginTop: theme.spacing(1),
+        marginBottom: theme.spacing(1),
+    },
+    timerIcon: {
+        marginRight: theme.spacing(1),
+        fontSize: '1rem'
+    },
+    countdown: {
+        marginTop: theme.spacing(2),
+        color: fade(theme.palette.primary.main, 1),
     }
 });
 
@@ -41,6 +56,17 @@ function MediaCard(props) {
             <CardContent>
                 <Typography gutterBottom variant="h6" className={classes.title}>
                     {`${item.name}`}
+                </Typography>
+
+                <Typography gutterBottom variant="body1" className={classes.description}>
+                    {`${item.description}`}
+                </Typography>
+
+                <Typography gutterBottom className={classes.countdown}>
+                    <>
+                        <Timer className={classes.timerIcon} />
+                        <StopWatch date={new Date(item.ending)} />
+                    </>
                 </Typography>
             </CardContent>
             <CardActions>

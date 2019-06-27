@@ -10,6 +10,9 @@ import axios from 'axios';
 
 const useStyles = makeStyles(theme => ({
     root: {
+        backgroundColor: '#f2f3f4',
+    },
+    content: {
         margin: theme.spacing(4),
     }
 }));
@@ -64,7 +67,7 @@ export default function Home(props) {
     }
 
     return (
-        <div>
+        <div className={classes.root}>
             <Navbar>
                 <ItemSearch
                     categories={categories}
@@ -74,7 +77,7 @@ export default function Home(props) {
                     onQueryChange={debounce(handleQueryChange, 500)} />
             </Navbar>
 
-            <div className={classes.root}>
+            <div className={classes.content}>
                 {
                     query ? <>
                         <Typography variant="h5" gutterBottom>
