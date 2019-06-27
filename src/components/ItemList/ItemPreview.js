@@ -84,7 +84,7 @@ function MediaCard(props) {
                     <Typography variant="body2" component="span">
                         <>
                             <Money className={classes.icon} />
-                            {item.current_bid}
+                            {item.current_bid ? item.current_bid : "No bids"}
                         </>
                     </Typography>
                     <Typography variant="body2" component="span" className={classes.rightFloated}>

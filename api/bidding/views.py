@@ -9,6 +9,21 @@ from rest_framework.permissions import IsAuthenticated
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework.decorators import action
 from rest_framework.response import Response
+from rest_framework import status
+from rest_framework.views import APIView
+from django.contrib.auth import user_logged_out
+from rest_framework.authtoken.models import Token
+
+
+class Logout(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def post(self, request, format=None):
+        Token.objects.filter(user=request.user).delete()
+        user_logged_out.send(
+            sender=request.user.__class__, request=request, user=request.user
+        )
+        return Response(status=status.HTTP_200_OK)
 
 
 class UserViewSet(viewsets.ModelViewSet):

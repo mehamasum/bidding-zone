@@ -18,6 +18,7 @@ urlpatterns = [
     path('', include(router.urls)),
     path('admin/', admin.site.urls),
     path('api/login/', drf_views.obtain_auth_token),
+    path('api/logout/', views.Logout.as_view()),
     path('api-auth/', include('rest_framework.urls', namespace='rest_framework'))
 ]
 

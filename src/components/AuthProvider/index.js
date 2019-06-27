@@ -8,14 +8,14 @@ function AuthProvider(props) {
     localStorage.getItem(LOCAL_STORAGE_TOKEN_KEY) || null
   );
 
-  const onLoginSuccess = token => {
-    localStorage.setItem(LOCAL_STORAGE_TOKEN_KEY, token);
-    setToken(true);
+  const onLoginSuccess = newToken => {
+    localStorage.setItem(LOCAL_STORAGE_TOKEN_KEY, newToken);
+    setToken(newToken);
   };
 
   const onLogoutSuccess = () => {
     localStorage.removeItem(LOCAL_STORAGE_TOKEN_KEY);
-    setToken(false);
+    setToken(null);
   };
 
   return (

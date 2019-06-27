@@ -1,11 +1,16 @@
 const styles = theme => ({
+  page: {
+    backgroundColor: '#f2f3f4',
+    height: '100vh',
+    width: '100vw'
+  },
   root: {
     position: 'absolute',
     width: theme.spacing(50),
     outline: 'none',
     top: `${50}%`,
     left: `${50}%`,
-    transform: `translate(-${50}%, -${50}%)`
+    transform: `translate(-${50}%, -${50}%)`,
   },
   container: {
     padding: theme.spacing(2)

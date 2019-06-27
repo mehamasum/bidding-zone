@@ -12,9 +12,11 @@ import MenuItem from '@material-ui/core/MenuItem';
 import Menu from '@material-ui/core/Menu';
 import { withRouter } from 'react-router';
 import Link from '@material-ui/core/Link';
+import axios from 'axios';
+
 
 const PrimarySearchAppBar = props => {
-  const { token, onLogout } = useContext(AuthContext);
+  const { token, onLogoutSuccess } = useContext(AuthContext);
   const [anchorEl, setAnchorEl] = React.useState(null);
 
   function handleProfileMenuOpen(event) {
@@ -32,7 +34,18 @@ const PrimarySearchAppBar = props => {
 
   function onLogoutClick() {
     handleMenuClose();
-    onLogout();
+    axios
+      .post('/api/logout/', null, {
+        headers: {
+          'Authorization': `Token ${token}`,
+        }
+      })
+      .then(response => {
+        onLogoutSuccess();
+      })
+      .catch(error => {
+        console.log('Logout failed', error, error.response);
+      });
   }
 
   function onProfileClick() {

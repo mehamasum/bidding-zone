@@ -6,6 +6,8 @@ import { withStyles } from '@material-ui/core/styles';
 import styles from './styles';
 import { Paper } from '@material-ui/core';
 import axios from 'axios';
+import Typography from '@material-ui/core/Typography';
+
 
 function Login(props) {
   const [values, setValues] = useState({
@@ -42,10 +44,15 @@ function Login(props) {
     return <Redirect to="/" />;
   }
   return (
-    <div className={props.classes.root}>
-      <Paper className={props.classes.container}>
-        <LoginForm onSubmit={onSubmit} onChange={onInputChange} values={values} />
-      </Paper>
+    <div className={props.classes.page}>
+      <div className={props.classes.root}>
+        <Paper className={props.classes.container}>
+          <Typography variant="h6" gutterBottom>
+            Login to Bidding-Zone
+          </Typography>
+          <LoginForm onSubmit={onSubmit} onChange={onInputChange} values={values} />
+        </Paper>
+      </div>
     </div>
   );
 }

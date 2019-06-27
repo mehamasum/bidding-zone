@@ -33,7 +33,6 @@ export default function ItemContainer(props) {
             })
             .then(response => {
                 setLoadingInterestingItems(false);
-                console.log(response.data);
                 setItems(response.data);
             })
             .catch(error => {
@@ -42,7 +41,6 @@ export default function ItemContainer(props) {
     }, [page, props.url]);
 
     const fetchMore = (forward) => e => {
-        console.log(forward);
         setPrevPage(page);
         setPage(forward ? page + 1 : page - 1);
     }

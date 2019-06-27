@@ -37,7 +37,6 @@ export default function Home(props) {
                 }
             })
             .then(response => {
-                console.log(response.data);
                 setCategories([{
                     id: "",
                     name: "All categories"
