@@ -1,18 +1,19 @@
 from django.contrib.auth.models import User, Group
 from rest_framework import serializers
-from .models import Auctionable, AuctionableImage, Category
+from .models import Auctionable, AuctionableImage, Category, Bid
+from django.db.models import Max
 
 
-class UserSerializer(serializers.HyperlinkedModelSerializer):
+class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = ('url', 'username', 'email', 'groups')
+        fields = ('id', 'username')
 
 
-class GroupSerializer(serializers.HyperlinkedModelSerializer):
+class GroupSerializer(serializers.ModelSerializer):
     class Meta:
         model = Group
-        fields = ('url', 'name')
+        fields = ('id', 'name')
 
 
 class AuctionableImageSerializer(serializers.ModelSerializer):
@@ -25,6 +26,14 @@ class AuctionableImageSerializer(serializers.ModelSerializer):
 class CategorySerializer(serializers.ModelSerializer):
     class Meta:
         model = Category
+        fields = '__all__'
+
+
+class BidSerializer(serializers.ModelSerializer):
+    user = UserSerializer(read_only=True)
+
+    class Meta:
+        model = Bid
         fields = '__all__'
 
 
@@ -51,7 +60,7 @@ class AuctionableSerializer(serializers.ModelSerializer):
         return item
 
     def get_current_bid(self, obj):
-        return "100.50"
+        return Bid.objects.filter(item=obj).aggregate(Max('amount'))['amount__max']
 
     # TODO: write update method for handling images
     # https://www.django-rest-framework.org/api-guide/serializers/#writing-update-methods-for-nested-representations

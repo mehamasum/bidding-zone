@@ -53,6 +53,7 @@ class Bid(models.Model):
     user = models.ForeignKey(User, models.CASCADE)
     item = models.ForeignKey(Auctionable, models.CASCADE)
     amount = models.DecimalField(max_digits=6, decimal_places=2)
+    added = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
         return f'{self.user} placed a bid of {self.amount} on {self.item}'

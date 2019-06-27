@@ -1,11 +1,14 @@
 from django.contrib.auth.models import User, Group
 from rest_framework import viewsets
 from .serializers import (UserSerializer, GroupSerializer,
-                          AuctionableSerializer, CategorySerializer)
-from .models import Auctionable, Category
+                          AuctionableSerializer, CategorySerializer,
+                          BidSerializer)
+from .models import Auctionable, Category, Bid
 from .permissions import IsAuctionableOwner
 from rest_framework.permissions import IsAuthenticated
 from django_filters.rest_framework import DjangoFilterBackend
+from rest_framework.decorators import action
+from rest_framework.response import Response
 
 
 class UserViewSet(viewsets.ModelViewSet):
@@ -55,4 +58,11 @@ class AuctionableViewSet(viewsets.ModelViewSet):
 
     def perform_create(self, serializer):
         serializer.save(user=self.request.user)
+
+    @action(detail=True)
+    def bids(self, request, pk=None):
+        item = self.get_object()
+        bids = Bid.objects.filter(item=item).order_by('-added')
+        serializer = BidSerializer(bids, many=True)
+        return Response(serializer.data)
 
