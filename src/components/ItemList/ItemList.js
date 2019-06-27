@@ -13,11 +13,6 @@ const styles = theme => ({
 });
 
 const List = props => {
-    const onDetailsClick = item => e => {
-        console.log(props.onDetailsClick)
-        props.onDetailsClick(item);
-    };
-
     const { classes, items } = props;
     if (items.length === 0)
         return <Typography variant="h6" color="textSecondary">No items found</Typography>;
@@ -26,10 +21,9 @@ const List = props => {
         <div className={classes.root}>
             <Grid container spacing={2}>
                 {items.map((item, index) => (
-                    <Grid item xs={12} sm={6} md={4} lg={3} key={index}>
+                    <Grid item xs={6} sm={4} md={3} key={index}>
                         <ItemPreview
                             item={item}
-                            onDetailsClick={onDetailsClick(item)}
                         />
                     </Grid>
                 ))}

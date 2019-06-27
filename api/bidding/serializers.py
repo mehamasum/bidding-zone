@@ -31,6 +31,8 @@ class CategorySerializer(serializers.ModelSerializer):
 class AuctionableSerializer(serializers.ModelSerializer):
 
     images = AuctionableImageSerializer(many=True, read_only=True)
+    category = CategorySerializer()
+    current_bid = serializers.SerializerMethodField()
 
     class Meta:
         model = Auctionable
@@ -47,6 +49,9 @@ class AuctionableSerializer(serializers.ModelSerializer):
             if serializer.is_valid():
                 serializer.save(item=item)
         return item
+
+    def get_current_bid(self, obj):
+        return "100.50"
 
     # TODO: write update method for handling images
     # https://www.django-rest-framework.org/api-guide/serializers/#writing-update-methods-for-nested-representations

@@ -55,7 +55,7 @@ export default function ItemContainer(props) {
                     items ?
                         <ItemList
                             items={items.results}
-                            onDetailsClick={props.onDetailsClick} /> : null
+                        /> : null
             }
             {items && (
                 <>

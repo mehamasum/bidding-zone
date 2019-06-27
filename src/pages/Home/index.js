@@ -62,9 +62,6 @@ export default function Home(props) {
         event.preventDefault();
     }
 
-    const onDetailsClick = item => {
-        props.history.push(`/items/${item.id}/`);
-    }
 
     return (
         <div className={classes.root}>
@@ -86,7 +83,7 @@ export default function Home(props) {
                         <AuctionableContainer
                             key={query + selectedCategory}
                             url={`/api/auctionables/?name=${query}&category=${selectedCategory}`}
-                            onDetailsClick={onDetailsClick} />
+                        />
                         <br />
                     </> : null
                 }
@@ -96,7 +93,7 @@ export default function Home(props) {
             </Typography>
                 <AuctionableContainer
                     url={`/api/auctionables/`}
-                    onDetailsClick={onDetailsClick} />
+                />
             </div>
         </div>
     );
