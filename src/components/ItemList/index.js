@@ -5,9 +5,8 @@ import axios from 'axios';
 import IconButton from '@material-ui/core/IconButton';
 import KeyboardArrowLeft from '@material-ui/icons/KeyboardArrowLeft';
 import KeyboardArrowRight from '@material-ui/icons/KeyboardArrowRight';
+import LinearProgress from '@material-ui/core/LinearProgress';
 
-
-// TODO: page and url unsync issue. maybe set page to 0 when new url found
 
 export default function ItemContainer(props) {
     const { token } = useContext(AuthContext);
@@ -49,23 +48,25 @@ export default function ItemContainer(props) {
         <div>
             {
                 loadingInterestingItems ?
-                    'Loading' :
-                    items ?
-                        <ItemList
-                            items={items.results}
-                        /> : null
+                    <LinearProgress variant="query" /> : null
+            }
+            {
+                items ?
+                    <ItemList
+                        items={items.results}
+                    /> : null
             }
             {items && (
                 <>
                     <IconButton
-                        disabled={!items.previous}
+                        disabled={loadingInterestingItems || !items.previous}
                         color="primary"
                         onClick={fetchMore(false)}
                     >
                         <KeyboardArrowLeft />
                     </IconButton>
                     <IconButton
-                        disabled={!items.next}
+                        disabled={loadingInterestingItems || !items.next}
                         color="primary"
                         onClick={fetchMore(true)}
                     >

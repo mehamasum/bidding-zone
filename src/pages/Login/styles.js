@@ -1,9 +1,4 @@
 const styles = theme => ({
-  page: {
-    backgroundColor: '#f2f3f4',
-    height: '100vh',
-    width: '100vw'
-  },
   root: {
     position: 'absolute',
     width: theme.spacing(50),

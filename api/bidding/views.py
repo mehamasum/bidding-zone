@@ -2,7 +2,7 @@ from django.contrib.auth.models import User, Group
 from rest_framework import viewsets
 from .serializers import (UserSerializer, GroupSerializer,
                           AuctionableSerializer, CategorySerializer,
-                          BidSerializer)
+                          BidSerializer, BidPlaceSerializer)
 from .models import Auctionable, Category, Bid
 from .permissions import IsAuctionableOwner
 from rest_framework.permissions import IsAuthenticated
@@ -82,4 +82,18 @@ class AuctionableViewSet(viewsets.ModelViewSet):
         bids = Bid.objects.filter(item=item).order_by('-added')
         serializer = BidSerializer(bids, many=True)
         return Response(serializer.data)
+
+    @action(detail=True, methods=['post'])
+    def place_bid(self, request, pk=None):
+        item = self.get_object()
+        serializer = BidPlaceSerializer(data=request.data, context={
+            'item': item
+        })
+        if serializer.is_valid():
+            serializer.save(user=self.request.user, item=item)
+            return Response(serializer.data)
+        else:
+            return Response(serializer.errors,
+                            status=status.HTTP_400_BAD_REQUEST)
+
 

@@ -35,6 +35,27 @@ class BidSerializer(serializers.ModelSerializer):
     class Meta:
         model = Bid
         fields = '__all__'
+        read_only_fields = ('id', 'item')
+
+
+class BidPlaceSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Bid
+        fields = '__all__'
+        read_only_fields = ('id', 'item', 'user')
+
+    def validate_amount(self, value):
+        """
+        Check that the amount is bigger than
+        the current bid (if any) or the starting value.
+        """
+        item = self.context['item']
+        bid = Bid.objects.filter(item=item).aggregate(Max('amount'))['amount__max']
+        if bid and value < bid:
+            raise serializers.ValidationError("Sorry! Bid is lower than current bid")
+        if value < item.base_price:
+            raise serializers.ValidationError("Sorry! Bid is lower than starting bid")
+        return value
 
 
 class AuctionableSerializer(serializers.ModelSerializer):

@@ -9,9 +9,6 @@ import { AuthContext } from '../../components/AuthProvider';
 import axios from 'axios';
 
 const useStyles = makeStyles(theme => ({
-    root: {
-        backgroundColor: '#f2f3f4',
-    },
     content: {
         margin: theme.spacing(4),
     }
@@ -63,7 +60,7 @@ export default function Home(props) {
 
 
     return (
-        <div className={classes.root}>
+        <div>
             <Navbar>
                 <ItemSearch
                     categories={categories}

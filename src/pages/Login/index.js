@@ -44,7 +44,7 @@ function Login(props) {
     return <Redirect to="/" />;
   }
   return (
-    <div className={props.classes.page}>
+    <div>
       <div className={props.classes.root}>
         <Paper className={props.classes.container}>
           <Typography variant="h6" gutterBottom>
