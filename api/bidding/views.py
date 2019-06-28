@@ -13,6 +13,7 @@ from rest_framework import status
 from rest_framework.views import APIView
 from django.contrib.auth import user_logged_out
 from rest_framework.authtoken.models import Token
+from .pagination import CreatedBasedCursorPagination
 
 
 class Logout(APIView):
@@ -61,6 +62,7 @@ class AuctionableViewSet(viewsets.ModelViewSet):
     serializer_class = AuctionableSerializer
     filter_backends = (DjangoFilterBackend,)
     filterset_fields = ('category', 'name',)
+    pagination_class = CreatedBasedCursorPagination
 
     def get_permissions(self):
 
