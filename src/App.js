@@ -5,6 +5,7 @@ import PrivateRoute from './components/PrivateRoute';
 import Home from './pages/Home';
 import Login from './pages/Login';
 import ItemDetails from './pages/ItemDetails';
+import Profile from './pages/Profile';
 
 
 function App() {
@@ -12,10 +13,10 @@ function App() {
     <Router>
       <AuthProvider>
         <Switch>
-          <PrivateRoute exact path="/" component={Home} />
           <Route exact path="/login/" component={Login} />
+          <PrivateRoute exact path="/" component={Home} />
           <PrivateRoute exact path="/items/:id?" component={ItemDetails} />
-          <PrivateRoute exact path="/profiles/:id?" render={() => 'Profile page'} />
+          <PrivateRoute exact path="/profile" component={Profile} />
           <Route render={() => '404'} />
         </Switch>
       </AuthProvider>

@@ -21,8 +21,8 @@ export default function Home(props) {
     const [query, setQuery] = useState("");
     const [categories, setCategories] = useState([
         {
-            value: "",
-            label: "All categories"
+            id: "",
+            name: "All categories"
         }
     ]);
 

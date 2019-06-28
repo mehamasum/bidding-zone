@@ -1,7 +1,8 @@
 from django.contrib.auth.models import User, Group
 from rest_framework import viewsets
 from .serializers import (UserSerializer, GroupSerializer,
-                          AuctionableSerializer, CategorySerializer,
+                          AuctionableSerializer, AuctionableWriteSerializer,
+                          CategorySerializer,
                           BidSerializer, BidPlaceSerializer)
 from .models import Auctionable, Category, Bid
 from .permissions import IsAuctionableOwner
@@ -59,13 +60,19 @@ class AuctionableViewSet(viewsets.ModelViewSet):
     A ViewSet for viewing and editing auctionable items.
     """
     queryset = Auctionable.objects.all()
-    serializer_class = AuctionableSerializer
     filter_backends = (DjangoFilterBackend,)
     filterset_fields = ('category', 'name',)
     pagination_class = CreatedBasedCursorPagination
 
-    def get_permissions(self):
+    def get_serializer_class(self):
+        if (self.action == 'create' or
+            self.action == 'update' or 
+            self.action == 'partial_update' or
+                self.action == 'destroy'):
+            return AuctionableWriteSerializer
+        return AuctionableSerializer
 
+    def get_permissions(self):
         if (self.action == 'update' or self.action == 'partial_update' or
                 self.action == 'destroy'):
             permission_classes = [IsAuctionableOwner]

@@ -69,6 +69,21 @@ class AuctionableSerializer(serializers.ModelSerializer):
         fields = '__all__'
         read_only_fields = ('id', 'user', 'added',)
 
+    def get_current_bid(self, obj):
+        return Bid.objects.filter(item=obj).aggregate(Max('amount'))['amount__max']
+
+    # TODO: write update method for handling images
+    # https://www.django-rest-framework.org/api-guide/serializers/#writing-update-methods-for-nested-representations
+
+
+class AuctionableWriteSerializer(serializers.ModelSerializer):
+    images = AuctionableImageSerializer(many=True, read_only=True)
+
+    class Meta:
+        model = Auctionable
+        fields = '__all__'
+        read_only_fields = ('id', 'user', 'added',)
+
     def create(self, validated_data):
         images_data = self.context.get('view').request.FILES
         item = Auctionable.objects.create(**validated_data)
@@ -79,9 +94,6 @@ class AuctionableSerializer(serializers.ModelSerializer):
             if serializer.is_valid():
                 serializer.save(item=item)
         return item
-
-    def get_current_bid(self, obj):
-        return Bid.objects.filter(item=obj).aggregate(Max('amount'))['amount__max']
 
     # TODO: write update method for handling images
     # https://www.django-rest-framework.org/api-guide/serializers/#writing-update-methods-for-nested-representations

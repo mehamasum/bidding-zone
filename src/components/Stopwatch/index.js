@@ -5,12 +5,13 @@ import Countdown from 'react-countdown-now';
 const Completionist = () => <span>Ended</span>;
 
 // Renderer callback with condition
-const renderer = ({ hours, minutes, seconds, completed }) => {
+const renderer = ({ days, hours, minutes, seconds, completed }) => {
     if (completed) {
         // Render a completed state
         return <Completionist />;
     } else {
         // Render a countdown
+        if (days) return <span>{days}d:{hours}h:{minutes}m:{seconds}s</span>;
         return <span>{hours}h:{minutes}m:{seconds}s</span>;
     }
 };

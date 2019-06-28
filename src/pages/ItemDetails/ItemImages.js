@@ -28,7 +28,7 @@ export default function ItemImages(props) {
             {item.images.length > 0 ?
                 <Carousel>
                     {item.images.map(img => <div key={img.id}>
-                        <img src={img.image} />
+                        <img src={img.image} alt={item.name} />
                     </div>)}
                 </Carousel> : <CardMedia
                     className={classes.media}
