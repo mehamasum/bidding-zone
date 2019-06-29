@@ -1,6 +1,6 @@
 import React from 'react';
 import { render, fireEvent, waitForElement } from '@testing-library/react';
-import { AuthContext, AuthProvider } from '../AuthProvider';
+import { AuthContext } from '../AuthProvider';
 import Navbar from './index';
 
 
