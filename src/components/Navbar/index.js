@@ -11,7 +11,7 @@ import MenuItem from '@material-ui/core/MenuItem';
 import Menu from '@material-ui/core/Menu';
 import Link from '@material-ui/core/Link';
 import axios from 'axios';
-
+import { withRouter } from 'react-router-dom';
 
 const Navbar = props => {
   const { token, onLogoutSuccess } = useContext(AuthContext);
@@ -112,4 +112,4 @@ const Navbar = props => {
   );
 };
 
-export default withStyles(styles)(Navbar);
+export default withStyles(styles)(withRouter(Navbar));

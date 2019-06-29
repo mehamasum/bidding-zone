@@ -7,7 +7,7 @@ import axios from 'axios';
 import Grid from '@material-ui/core/Grid';
 import ItemCreate from '../../components/ItemCreate';
 import Snackbar from '@material-ui/core/Snackbar';
-
+import { getApiCallError, getFieldValidationErrors } from '../../utils'
 
 const useStyles = makeStyles(theme => ({
     content: {
@@ -35,6 +35,16 @@ export default function ProfilePage(props) {
         category: '',
         base_price: 0.00,
         ending: ''
+    });
+
+    const [errors, setErrors] = useState({
+        name: null,
+        description: null,
+        units: null,
+        status: null,
+        category: null,
+        base_price: null,
+        ending: null
     });
 
     const [openMessage, setOpenMessage] = React.useState(null);
@@ -84,8 +94,9 @@ export default function ProfilePage(props) {
                 console.log(response.data);
             })
             .catch(error => {
-                setOpenMessage('Failed! Fix the errors in form');
                 console.log('Add item failed', error, error.response);
+                setOpenMessage(getApiCallError(error.response));
+                setErrors(getFieldValidationErrors(error.response));
             });
     }
 
@@ -103,6 +114,7 @@ export default function ProfilePage(props) {
                             values={values}
                             handleChange={handleChange}
                             handleSubmit={handleSubmit}
+                            errors={errors}
                         />
                     </Grid>
                 </Grid>

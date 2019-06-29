@@ -22,6 +22,9 @@ export default function SearchBox(props) {
           <SearchIcon />
         </div>
         <InputBase
+          inputProps={{
+            'data-testid': 'query-input'
+          }}
           placeholder="Search items..."
           classes={{
             root: classes.inputRoot,
@@ -31,6 +34,9 @@ export default function SearchBox(props) {
           endAdornment={(<InputAdornment>
             <FormControl className={classes.formControl}>
               <Select
+                inputProps={{
+                  'data-testid': 'category-input'
+                }}
                 value={props.selectedCategory}
                 onChange={props.onChange}
                 displayEmpty

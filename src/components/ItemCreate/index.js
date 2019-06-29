@@ -29,7 +29,7 @@ const useStyles = makeStyles(theme => ({
 
 export default function ProfilePage(props) {
     const classes = useStyles();
-    const { values, handleChange, handleSubmit } = props;
+    const { values, handleChange, handleSubmit, errors } = props;
     const { token } = useContext(AuthContext);
 
     const [categories, setCategories] = useState([]);
@@ -60,6 +60,9 @@ export default function ProfilePage(props) {
                     onChange={handleChange('name')}
                     margin="normal"
                     fullWidth
+                    error={!!errors.name}
+                    helperText={errors.name ? errors.name[0] : null}
+
                 />
                 <TextField
                     label="Description"
@@ -71,6 +74,9 @@ export default function ProfilePage(props) {
                     fullWidth
                     multiline
                     rowsMax="4"
+                    error={!!errors.description}
+                    helperText={errors.description ? errors.description : null}
+
                 />
                 <TextField
                     label="Units"
@@ -81,6 +87,8 @@ export default function ProfilePage(props) {
                     margin="normal"
                     fullWidth
                     type="number"
+                    error={!!errors.units}
+                    helperText={errors.units ? errors.units : null}
                 />
                 <TextField
                     select
@@ -96,6 +104,8 @@ export default function ProfilePage(props) {
                     helperText="Please select the status of the item"
                     margin="normal"
                     fullWidth
+                    error={!!errors.status}
+                    helperText={errors.status ? errors.status : null}
                 >
                     <MenuItem value="ON_AUCTION">
                         On Auction
@@ -121,6 +131,8 @@ export default function ProfilePage(props) {
                     helperText="Please select the category of the item"
                     margin="normal"
                     fullWidth
+                    error={!!errors.category}
+                    helperText={errors.category ? errors.category[0] : null}
                 >
                     {categories.map(option => (
                         <MenuItem key={option.id} value={option.id}>
@@ -138,6 +150,8 @@ export default function ProfilePage(props) {
                     fullWidth
                     type="number"
                     InputProps={{ inputProps: { step: 0.01 } }}
+                    error={!!errors.base_price}
+                    helperText={errors.base_price ? errors.base_price : null}
                 />
 
                 <TextField
@@ -152,6 +166,8 @@ export default function ProfilePage(props) {
                     }}
                     margin="normal"
                     fullWidth
+                    error={!!errors.ending}
+                    helperText={errors.ending ? errors.ending[0] : null}
                 />
 
                 <input

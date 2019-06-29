@@ -56,6 +56,9 @@ class BidPlaceSerializer(serializers.ModelSerializer):
         if timezone.now() > item.ending:
             raise serializers.ValidationError("Sorry! Auction ended")
 
+        if value <= 0:
+            raise serializers.ValidationError("Bid amount must be positive")
+
         bid = Bid.objects.filter(item=item).aggregate(Max('amount'))['amount__max']
         if bid and value < bid:
             raise serializers.ValidationError("Sorry! Bid is lower than current bid")
@@ -103,6 +106,16 @@ class AuctionableWriteSerializer(serializers.ModelSerializer):
 
     # TODO: write update method for handling images
     # https://www.django-rest-framework.org/api-guide/serializers/#writing-update-methods-for-nested-representations
+
+    def validate_units(self, value):
+        if value <= 0:
+            raise serializers.ValidationError("Units must be positive")
+        return value
+    
+    def validate_base_price(self, value):
+        if value <= 0:
+            raise serializers.ValidationError("Base price must be positive")
+        return value
 
     def validate_ending(self, value):
         """

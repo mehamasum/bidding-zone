@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useContext } from 'react';
 import Navbar from '../../components/Navbar';
 import ItemSearch from '../../components/ItemSearch';
-import AuctionableContainer from '../../components/ItemList';
+import ItemList from '../../components/ItemList';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import debounce from 'lodash.debounce';
@@ -76,7 +76,7 @@ export default function Home(props) {
                         <Typography variant="h5" gutterBottom>
                             Search results for <em>{query}</em> in <em>{selectedCategory === '' ? 'All categories' : categories.find(cat => cat.id === selectedCategory).name}</em>
                         </Typography>
-                        <AuctionableContainer
+                        <ItemList
                             key={query + selectedCategory}
                             url={`/api/auctionables/?name=${query}&category=${selectedCategory}`}
                         />
@@ -87,7 +87,7 @@ export default function Home(props) {
                 <Typography variant="h5" gutterBottom>
                     Items you might like
             </Typography>
-                <AuctionableContainer
+                <ItemList
                     url={`/api/auctionables/`}
                 />
             </div>
