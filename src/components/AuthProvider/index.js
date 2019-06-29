@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
 
 const LOCAL_STORAGE_TOKEN_KEY = 'bidding-zone-token';
-const AuthContext = React.createContext();
+const AuthContext = React.createContext({
+  token: null,
+});
 
 function AuthProvider(props) {
   const [token, setToken] = useState(

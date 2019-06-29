@@ -1,5 +1,4 @@
 import React, { useContext } from 'react';
-import PropTypes from 'prop-types';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
@@ -10,12 +9,11 @@ import IconButton from '@material-ui/core/IconButton';
 import AccountCircle from '@material-ui/icons/AccountCircle';
 import MenuItem from '@material-ui/core/MenuItem';
 import Menu from '@material-ui/core/Menu';
-import { withRouter } from 'react-router';
 import Link from '@material-ui/core/Link';
 import axios from 'axios';
 
 
-const PrimarySearchAppBar = props => {
+const Navbar = props => {
   const { token, onLogoutSuccess } = useContext(AuthContext);
   const [anchorEl, setAnchorEl] = React.useState(null);
 
@@ -66,13 +64,13 @@ const PrimarySearchAppBar = props => {
     return (
       <>
         {token ? (
-          <Menu {...menuProps}>
-            <MenuItem onClick={onProfileClick}>Profile</MenuItem>
-            <MenuItem onClick={onLogoutClick}>Logout</MenuItem>
+          <Menu {...menuProps} data-testid="profile-menu">
+            <MenuItem onClick={onProfileClick} data-testid="profile-btn">Profile</MenuItem>
+            <MenuItem onClick={onLogoutClick} data-testid="logout-btn">Logout</MenuItem>
           </Menu>
         ) : (
-            <Menu {...menuProps}>
-              <MenuItem onClick={onLoginClick}>Login</MenuItem>
+            <Menu {...menuProps} data-testid="profile-menu">
+              <MenuItem onClick={onLoginClick} data-testid="login-btn">Login</MenuItem>
             </Menu>
           )}
       </>
@@ -102,6 +100,7 @@ const PrimarySearchAppBar = props => {
               aria-haspopup="true"
               onClick={handleProfileMenuOpen}
               color="inherit"
+              data-testid="profile-menu-btn"
             >
               <AccountCircle />
             </IconButton>
@@ -113,8 +112,4 @@ const PrimarySearchAppBar = props => {
   );
 };
 
-PrimarySearchAppBar.propTypes = {
-  classes: PropTypes.object.isRequired
-};
-
-export default withStyles(styles)(withRouter(PrimarySearchAppBar));
+export default withStyles(styles)(Navbar);
