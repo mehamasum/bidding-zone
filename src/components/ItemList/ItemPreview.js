@@ -66,6 +66,7 @@ function MediaCard(props) {
                 onMouseOver={onMouseOver}
                 onMouseOut={onMouseOut}
                 raised={raised}
+                data-testid="item-preview-card"
             >
                 <CardHeader
                     title={<Typography variant="body1" >
