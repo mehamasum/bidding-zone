@@ -9,6 +9,7 @@ import StopWatch from '../../components/Stopwatch';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import CardHeader from '@material-ui/core/CardHeader';
+import moment from 'moment';
 
 const styles = theme => ({
     card: {
@@ -100,7 +101,7 @@ function ItemDescription(props) {
                             variant="contained"
                             type="submit"
                             margin="normal"
-                            disabled={placingBid}
+                            disabled={placingBid || moment(item.ending).isBefore(new Date())}
                         >
                             Place Bid
                         </Button>

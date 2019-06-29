@@ -2,6 +2,7 @@ from django.contrib.auth.models import User, Group
 from rest_framework import serializers
 from .models import Auctionable, AuctionableImage, Category, Bid
 from django.db.models import Max
+from django.utils import timezone
 
 
 class UserSerializer(serializers.ModelSerializer):
@@ -50,6 +51,11 @@ class BidPlaceSerializer(serializers.ModelSerializer):
         the current bid (if any) or the starting value.
         """
         item = self.context['item']
+        if item.status != Auctionable.ON_AUCTION:
+            raise serializers.ValidationError("Sorry! Can't place bid on this item")
+        if timezone.now() > item.ending:
+            raise serializers.ValidationError("Sorry! Auction ended")
+
         bid = Bid.objects.filter(item=item).aggregate(Max('amount'))['amount__max']
         if bid and value < bid:
             raise serializers.ValidationError("Sorry! Bid is lower than current bid")
@@ -97,3 +103,11 @@ class AuctionableWriteSerializer(serializers.ModelSerializer):
 
     # TODO: write update method for handling images
     # https://www.django-rest-framework.org/api-guide/serializers/#writing-update-methods-for-nested-representations
+
+    def validate_ending(self, value):
+        """
+        Check that the ending date is in the future
+        """
+        if timezone.now() > value:
+            raise serializers.ValidationError("Ending time and date must be in future (UTC+0)")
+        return value
