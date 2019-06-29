@@ -2,10 +2,11 @@ import React from 'react';
 import { render, fireEvent, waitForElement } from '@testing-library/react';
 import { AuthContext } from '../AuthProvider';
 import Navbar from './index';
+import { renderWithRouter } from '../../utils/testUtils';
 
 
 test('Navbar shows login option by default', async () => {
-    const { getByTestId, debug } = render(
+    const { getByTestId, debug } = renderWithRouter(
         <Navbar />
     );
     const profileButton = getByTestId('profile-menu-btn');
@@ -16,7 +17,7 @@ test('Navbar shows login option by default', async () => {
 
 
 test('Navbar shows login option when token is not present', async () => {
-    const { getByTestId } = render(
+    const { getByTestId } = renderWithRouter(
         <AuthContext.Provider value={{ token: null }}>
             <Navbar />
         </AuthContext.Provider>
@@ -29,7 +30,7 @@ test('Navbar shows login option when token is not present', async () => {
 
 
 test('Navbar shows logout and profile menu when token is present', async () => {
-    const { getByTestId } = render(
+    const { getByTestId } = renderWithRouter(
         <AuthContext.Provider value={{ token: 'dummy' }}>
             <Navbar />
         </AuthContext.Provider>

@@ -88,7 +88,9 @@ function ItemDescription(props) {
                         onSubmit={handleBidSubmit}
                     >
                         <TextField
-                            id="outlined-number"
+                            inputProps={{
+                                'data-testid': "bid-input"
+                            }}
                             placeholder="Your bid"
                             onChange={handleBidChange}
                             type="number"
@@ -96,6 +98,7 @@ function ItemDescription(props) {
                             variant="outlined"
                         />
                         <Button
+                            data-testid="bid-submit-btn"
                             size="large"
                             color="secondary"
                             variant="contained"

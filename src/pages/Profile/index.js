@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useContext } from 'react';
 import Navbar from '../../components/Navbar';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
@@ -55,7 +55,6 @@ export default function ProfilePage(props) {
         const files = event.target.files;
         if (files) {
             setValues({ ...values, [name]: files });
-            console.log(files);
 
         } else {
             setValues({ ...values, [name]: event.target.value });
@@ -64,7 +63,6 @@ export default function ProfilePage(props) {
 
     const handleSubmit = e => {
         e.preventDefault();
-        console.log(values);
 
         let formData = new FormData();
         Object.keys(values).forEach(key => {
@@ -78,11 +76,6 @@ export default function ProfilePage(props) {
             }
         })
 
-
-        for (var pair of formData.entries()) {
-            console.log(pair[0] + ', ' + pair[1]);
-        }
-
         axios
             .post('/api/auctionables/', formData, {
                 headers: {
@@ -91,7 +84,6 @@ export default function ProfilePage(props) {
             })
             .then(response => {
                 setOpenMessage('Item added for auction');
-                console.log(response.data);
             })
             .catch(error => {
                 console.log('Add item failed', error, error.response);

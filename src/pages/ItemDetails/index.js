@@ -33,12 +33,10 @@ export default function ItemDetailsPage(props) {
 
     const handleBidChange = event => {
         setBid(event.target.value);
-        console.log(event.target.value);
     };
 
     const handleBidSubmit = event => {
         event.preventDefault();
-        console.log(bid);
         if (!item) return;
 
         setPlacingBid(true);
@@ -53,7 +51,6 @@ export default function ItemDetailsPage(props) {
                 })
             .then(response => {
                 setPlacingBid(false);
-                console.log(response.data);
                 setOpenMessage("Your bid is placed!");
             })
             .catch(error => {
@@ -75,7 +72,6 @@ export default function ItemDetailsPage(props) {
             .then(response => {
                 setLoadingItem(false);
                 setItem(response.data);
-                console.log(response.data);
             })
             .catch(error => {
                 console.log('Fetch auctionable failed', error, error.response);
@@ -91,22 +87,22 @@ export default function ItemDetailsPage(props) {
                 <Grid container spacing={2}>
                     {
                         loadingItem ?
-                            <LinearProgress variant="query" /> : null
+                            <LinearProgress /> : null
                     }
                     {
                         item ?
                             (<>
-                                <Grid item xs={12} sm={6} lg={4}>
+                                <Grid item xs={12} sm={6} lg={4} data-testid="item-container">
                                     <ItemImages item={item} />
                                 </Grid>
-                                <Grid item xs={12} sm={6} lg={8}>
+                                <Grid item xs={12} sm={6} lg={8} data-testid="item-container">
                                     <ItemDespription
                                         item={item}
                                         placingBid={placingBid}
                                         handleBidSubmit={handleBidSubmit}
                                         handleBidChange={handleBidChange} />
                                 </Grid>
-                                <Grid item xs={12} sm={6}>
+                                <Grid item xs={12} sm={6} data-testid="item-container">
                                     <ItemBids item={item} />
                                 </Grid>
                             </>) : null
@@ -115,6 +111,7 @@ export default function ItemDetailsPage(props) {
                 </Grid>
             </div>
             <Snackbar
+                data-testid="toast-msg"
                 anchorOrigin={{
                     vertical: 'bottom',
                     horizontal: 'left',

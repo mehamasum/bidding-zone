@@ -50,7 +50,6 @@ export default function Home(props) {
     }
 
     function handleQueryChange(q) {
-        console.log('handleQueryChange', q)
         setQuery(q);
     }
 

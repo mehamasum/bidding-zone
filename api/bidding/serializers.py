@@ -113,7 +113,7 @@ class AuctionableWriteSerializer(serializers.ModelSerializer):
         return value
     
     def validate_base_price(self, value):
-        if value <= 0:
+        if value < 0:
             raise serializers.ValidationError("Base price must be positive")
         return value
 

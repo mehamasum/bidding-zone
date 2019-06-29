@@ -54,19 +54,17 @@ export default function ProfilePage(props) {
             <form className={classes.container} onSubmit={handleSubmit}>
                 <TextField
                     label="Name"
-                    helperText="Type the name of your item..."
                     className={classes.formItem}
                     value={values.name}
                     onChange={handleChange('name')}
                     margin="normal"
                     fullWidth
                     error={!!errors.name}
-                    helperText={errors.name ? errors.name[0] : null}
+                    helperText={errors.name ? errors.name[0] : "Type the name of your item..."}
 
                 />
                 <TextField
                     label="Description"
-                    helperText="Add a description of your item..."
                     className={classes.formItem}
                     value={values.description}
                     onChange={handleChange('description')}
@@ -75,12 +73,11 @@ export default function ProfilePage(props) {
                     multiline
                     rowsMax="4"
                     error={!!errors.description}
-                    helperText={errors.description ? errors.description : null}
+                    helperText={errors.description ? errors.description : "Add a description of your item..."}
 
                 />
                 <TextField
                     label="Units"
-                    helperText="How many units of this item you want to sell?"
                     className={classes.formItem}
                     value={values.units}
                     onChange={handleChange('units')}
@@ -88,7 +85,7 @@ export default function ProfilePage(props) {
                     fullWidth
                     type="number"
                     error={!!errors.units}
-                    helperText={errors.units ? errors.units : null}
+                    helperText={errors.units ? errors.units : "How many units of this item you want to sell?"}
                 />
                 <TextField
                     select
@@ -101,11 +98,10 @@ export default function ProfilePage(props) {
                             className: classes.menu,
                         },
                     }}
-                    helperText="Please select the status of the item"
                     margin="normal"
                     fullWidth
                     error={!!errors.status}
-                    helperText={errors.status ? errors.status : null}
+                    helperText={errors.status ? errors.status : "Please select the status of the item"}
                 >
                     <MenuItem value="ON_AUCTION">
                         On Auction
@@ -128,11 +124,11 @@ export default function ProfilePage(props) {
                             className: classes.menu,
                         },
                     }}
-                    helperText="Please select the category of the item"
                     margin="normal"
                     fullWidth
                     error={!!errors.category}
-                    helperText={errors.category ? errors.category[0] : null}
+                    helperText={errors.category ? errors.category[0] :
+                        "Please select the category of the item"}
                 >
                     {categories.map(option => (
                         <MenuItem key={option.id} value={option.id}>
@@ -142,7 +138,6 @@ export default function ProfilePage(props) {
                 </TextField>
                 <TextField
                     label="Base price"
-                    helperText="Bids should start from this price"
                     className={classes.formItem}
                     value={values.base_price}
                     onChange={handleChange('base_price')}
@@ -151,12 +146,12 @@ export default function ProfilePage(props) {
                     type="number"
                     InputProps={{ inputProps: { step: 0.01 } }}
                     error={!!errors.base_price}
-                    helperText={errors.base_price ? errors.base_price : null}
+                    helperText={errors.base_price ? errors.base_price :
+                        "Bids should start from this price"}
                 />
 
                 <TextField
                     label="Ending date and time"
-                    helperText="Auction will close on this date and time in UTC+0"
                     type="datetime-local"
                     value={values.ending}
                     onChange={handleChange('ending')}
@@ -167,7 +162,8 @@ export default function ProfilePage(props) {
                     margin="normal"
                     fullWidth
                     error={!!errors.ending}
-                    helperText={errors.ending ? errors.ending[0] : null}
+                    helperText={errors.ending ? errors.ending[0] :
+                        "Auction will close on this date and time in UTC+0"}
                 />
 
                 <input

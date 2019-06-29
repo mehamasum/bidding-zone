@@ -36,7 +36,6 @@ function ItemDescription(props) {
             .then(response => {
                 setLoadingBids(false);
                 setBids(response.data);
-                console.log(response.data);
             })
             .catch(error => {
                 console.log('Fetch bids failed', error, error.response);
